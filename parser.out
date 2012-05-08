@@ -1,0 +1,267 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    RENAME
+    NOTEQUAL
+    DIVIDE
+    RETURN
+    LPAREN
+    PREPARE
+    THEN
+    RETURNASSIGN
+    EXPLAIN
+    IN
+    WHILE
+    HELP
+    BEGIN
+    DESCRIBE
+    MINUS
+    DOT
+    INSERT
+    BETWEEN
+    RPAREN
+    TRUNCATE
+    CREATE
+    DROP
+    ALTER
+    LT
+    PLUS
+    SELECT
+    BLANK
+    COMMA
+    USE
+    EXECUTE
+    GT
+    END
+    GTE
+    FOR
+    SHOW
+    INTO
+    UPDATE
+    AS
+    TIMES
+    ELSEIF
+    LTE
+    ELSE
+    WHERE
+    IF
+    AND
+    FROM
+    NAME
+    STDNOTEQUAL
+    INFILE
+    DO
+    CALL
+    NOT
+    DELETE
+    OR
+    MOD
+
+Grammar
+
+Rule 0     S' -> compoundstatement
+Rule 1     value -> STRING
+Rule 2     value -> INTEGER
+Rule 3     value -> FLOAT
+Rule 4     setstatement -> SET VARIABLE EQUAL value
+Rule 5     setstatement -> SET VARIABLE EQUAL value DELIMITER
+Rule 6     statement -> setstatement
+Rule 7     compoundstatement -> statement statement
+
+Terminals, with rules where they appear
+
+ALTER                : 
+AND                  : 
+AS                   : 
+BEGIN                : 
+BETWEEN              : 
+BLANK                : 
+CALL                 : 
+COMMA                : 
+CREATE               : 
+DELETE               : 
+DELIMITER            : 5
+DESCRIBE             : 
+DIVIDE               : 
+DO                   : 
+DOT                  : 
+DROP                 : 
+ELSE                 : 
+ELSEIF               : 
+END                  : 
+EQUAL                : 4 5
+EXECUTE              : 
+EXPLAIN              : 
+FLOAT                : 3
+FOR                  : 
+FROM                 : 
+GT                   : 
+GTE                  : 
+HELP                 : 
+IF                   : 
+IN                   : 
+INFILE               : 
+INSERT               : 
+INTEGER              : 2
+INTO                 : 
+LPAREN               : 
+LT                   : 
+LTE                  : 
+MINUS                : 
+MOD                  : 
+NAME                 : 
+NOT                  : 
+NOTEQUAL             : 
+OR                   : 
+PLUS                 : 
+PREPARE              : 
+RENAME               : 
+RETURN               : 
+RETURNASSIGN         : 
+RPAREN               : 
+SELECT               : 
+SET                  : 4 5
+SHOW                 : 
+STDNOTEQUAL          : 
+STRING               : 1
+THEN                 : 
+TIMES                : 
+TRUNCATE             : 
+UPDATE               : 
+USE                  : 
+VARIABLE             : 4 5
+WHERE                : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+compoundstatement    : 0
+setstatement         : 6
+statement            : 7 7
+value                : 4 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . compoundstatement
+    (7) compoundstatement -> . statement statement
+    (6) statement -> . setstatement
+    (4) setstatement -> . SET VARIABLE EQUAL value
+    (5) setstatement -> . SET VARIABLE EQUAL value DELIMITER
+
+    SET             shift and go to state 1
+
+    setstatement                   shift and go to state 3
+    compoundstatement              shift and go to state 2
+    statement                      shift and go to state 4
+
+state 1
+
+    (4) setstatement -> SET . VARIABLE EQUAL value
+    (5) setstatement -> SET . VARIABLE EQUAL value DELIMITER
+
+    VARIABLE        shift and go to state 5
+
+
+state 2
+
+    (0) S' -> compoundstatement .
+
+
+
+state 3
+
+    (6) statement -> setstatement .
+
+    SET             reduce using rule 6 (statement -> setstatement .)
+    $end            reduce using rule 6 (statement -> setstatement .)
+
+
+state 4
+
+    (7) compoundstatement -> statement . statement
+    (6) statement -> . setstatement
+    (4) setstatement -> . SET VARIABLE EQUAL value
+    (5) setstatement -> . SET VARIABLE EQUAL value DELIMITER
+
+    SET             shift and go to state 1
+
+    setstatement                   shift and go to state 3
+    statement                      shift and go to state 6
+
+state 5
+
+    (4) setstatement -> SET VARIABLE . EQUAL value
+    (5) setstatement -> SET VARIABLE . EQUAL value DELIMITER
+
+    EQUAL           shift and go to state 7
+
+
+state 6
+
+    (7) compoundstatement -> statement statement .
+
+    $end            reduce using rule 7 (compoundstatement -> statement statement .)
+
+
+state 7
+
+    (4) setstatement -> SET VARIABLE EQUAL . value
+    (5) setstatement -> SET VARIABLE EQUAL . value DELIMITER
+    (1) value -> . STRING
+    (2) value -> . INTEGER
+    (3) value -> . FLOAT
+
+    STRING          shift and go to state 8
+    INTEGER         shift and go to state 11
+    FLOAT           shift and go to state 9
+
+    value                          shift and go to state 10
+
+state 8
+
+    (1) value -> STRING .
+
+    DELIMITER       reduce using rule 1 (value -> STRING .)
+    SET             reduce using rule 1 (value -> STRING .)
+    $end            reduce using rule 1 (value -> STRING .)
+
+
+state 9
+
+    (3) value -> FLOAT .
+
+    DELIMITER       reduce using rule 3 (value -> FLOAT .)
+    SET             reduce using rule 3 (value -> FLOAT .)
+    $end            reduce using rule 3 (value -> FLOAT .)
+
+
+state 10
+
+    (4) setstatement -> SET VARIABLE EQUAL value .
+    (5) setstatement -> SET VARIABLE EQUAL value . DELIMITER
+
+    $end            reduce using rule 4 (setstatement -> SET VARIABLE EQUAL value .)
+    SET             reduce using rule 4 (setstatement -> SET VARIABLE EQUAL value .)
+    DELIMITER       shift and go to state 12
+
+
+state 11
+
+    (2) value -> INTEGER .
+
+    DELIMITER       reduce using rule 2 (value -> INTEGER .)
+    SET             reduce using rule 2 (value -> INTEGER .)
+    $end            reduce using rule 2 (value -> INTEGER .)
+
+
+state 12
+
+    (5) setstatement -> SET VARIABLE EQUAL value DELIMITER .
+
+    $end            reduce using rule 5 (setstatement -> SET VARIABLE EQUAL value DELIMITER .)
+    SET             reduce using rule 5 (setstatement -> SET VARIABLE EQUAL value DELIMITER .)
+
