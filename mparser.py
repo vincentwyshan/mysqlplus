@@ -4,7 +4,7 @@ import ply.yacc as yacc
 
 from mlex import lexer, tokens
 
-start = 'compoundstatement'
+start = 'program'
 
 class Statement(object):
     content = None
@@ -27,9 +27,9 @@ def p_setstatement(p):
                  | SET VARIABLE EQUAL value DELIMITER'''
     p[0] = p[1]+p[2]+p[3]+p[4]
 
-def p_statement(p):
+def p_singlestatement(p):
     '''
-    statement : setstatement
+    singlestatement : setstatement
     '''
     statement = Statement()
     statement.content = p[1]
@@ -37,13 +37,26 @@ def p_statement(p):
 
 def p_compoundstatement(p):
     '''
-    compoundstatement : statement statement
+    compoundstatement : singlestatement singlestatement
     '''
     #p[0] = p[1] + p[2]
     if p[0] == None:
         p[0] = []
     p[0].append(p[1])
     p[0].append(p[2])
+
+def p_statement(p):
+    '''
+    statement   : compoundstatement
+                | singlestatement
+    '''
+    pass
+
+def p_program(p):
+    '''
+    program : statement statement
+    '''
+    pass
 
 def p_error(p):
     print 'Syntax error: %s' % p

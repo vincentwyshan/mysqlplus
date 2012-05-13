@@ -28,7 +28,7 @@ keywords = (
         'FOR',
         'IF', 'THEN', 'ELSEIF', 'ELSE', 
         'WHILE', 'DO', 
-        'RETURN',
+        'EXIT',
 
         'WHERE', 'FROM', 'AS', 'INTO', 'INFILE',
 
@@ -294,8 +294,8 @@ def t_DO(t):
     'DO'
     return t
 
-def t_RETURN(t):
-    'RETURN'
+def t_EXIT(t):
+    'EXIT'
     return t
 
 def t_WHERE(t):
